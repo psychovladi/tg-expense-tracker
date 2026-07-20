@@ -1,0 +1,53 @@
+:root {
+  /*
+   * Falls back to a plain light/dark palette when running outside Telegram
+   * (e.g. `npm run dev` in a browser). Inside Telegram, initTelegram() binds
+   * the real --tg-theme-* variables which override these defaults.
+   */
+  --bg: var(--tg-theme-bg-color, #ffffff);
+  --bg-secondary: var(--tg-theme-secondary-bg-color, #f2f2f7);
+  --text: var(--tg-theme-text-color, #0b0b0d);
+  --hint: var(--tg-theme-hint-color, #8b8b93);
+  --accent: var(--tg-theme-button-color, #3b82f6);
+  --accent-text: var(--tg-theme-button-text-color, #ffffff);
+  --link: var(--tg-theme-link-color, #3b82f6);
+  --destructive: var(--tg-theme-destructive-text-color, #ef4444);
+  --section-bg: var(--tg-theme-section-bg-color, #ffffff);
+  --separator: var(--tg-theme-section-separator-color, #e5e5ea);
+
+  font: 16px/1.45 system-ui, 'Segoe UI', Roboto, sans-serif;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not(.in-telegram) {
+    --bg: #16171d;
+    --bg-secondary: #1f2028;
+    --text: #f3f4f6;
+    --hint: #9ca3af;
+    --section-bg: #1f2028;
+    --separator: #2e303a;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+}
+
+#root {
+  min-height: 100dvh;
+}
+
+button {
+  font: inherit;
+}
+
+input {
+  font: inherit;
+}
