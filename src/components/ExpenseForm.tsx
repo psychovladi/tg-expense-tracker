@@ -1,8 +1,13 @@
 import { useState, type FormEvent } from 'react';
-import { CATEGORIES, DEFAULT_CATEGORY_ID } from '../data/categories';
+import { CATEGORIES, CURRENCY, DEFAULT_CATEGORY_ID } from '../data/categories';
 import { hapticFeedback } from '@telegram-apps/sdk-react';
 
 const todayISO = () => new Date().toISOString().slice(0, 10);
+
+const tint = (hex: string, alpha: number) => {
+  const n = parseInt(hex.slice(1), 16);
+  return `rgba(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}, ${alpha})`;
+};
 
 interface Props {
   onAdd: (input: { amount: number; categoryId: string; note: string; date: string }) => void;
@@ -47,22 +52,33 @@ export function ExpenseForm({ onAdd }: Props) {
           onChange={(e) => setAmount(e.target.value)}
           required
         />
-        <span className="expense-form__currency">₽</span>
+        <span className="expense-form__currency">{CURRENCY}</span>
       </div>
 
       <div className="expense-form__categories">
-        {CATEGORIES.map((c) => (
-          <button
-            key={c.id}
-            type="button"
-            className={`category-chip${c.id === categoryId ? ' category-chip--active' : ''}`}
-            style={c.id === categoryId ? { background: c.color } : undefined}
-            onClick={() => setCategoryId(c.id)}
-          >
-            <span className="category-chip__emoji">{c.emoji}</span>
-            {c.label}
-          </button>
-        ))}
+        {CATEGORIES.map((c) => {
+          const active = c.id === categoryId;
+          return (
+            <button
+              key={c.id}
+              type="button"
+              className={`category-chip${active ? ' category-chip--active' : ''}`}
+              style={{
+                borderColor: active ? c.color : 'transparent',
+                background: active ? tint(c.color, 0.14) : undefined,
+              }}
+              onClick={() => setCategoryId(c.id)}
+            >
+              <span
+                className="category-chip__emoji"
+                style={{ background: active ? c.color : tint(c.color, 0.16) }}
+              >
+                {c.emoji}
+              </span>
+              <span className="category-chip__label">{c.label}</span>
+            </button>
+          );
+        })}
       </div>
 
       <div className="expense-form__row expense-form__row--secondary">

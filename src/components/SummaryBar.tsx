@@ -1,4 +1,5 @@
 import type { Expense } from '../types';
+import { CURRENCY } from '../data/categories';
 
 interface Props {
   expenses: Expense[];
@@ -23,11 +24,11 @@ export function SummaryBar({ expenses }: Props) {
     <div className="summary-bar">
       <div className="summary-bar__item">
         <span className="summary-bar__label">Сегодня</span>
-        <span className="summary-bar__value">{fmt(todayTotal)} ₽</span>
+        <span className="summary-bar__value">{fmt(todayTotal)} {CURRENCY}</span>
       </div>
       <div className="summary-bar__item">
         <span className="summary-bar__label">За месяц</span>
-        <span className="summary-bar__value summary-bar__value--main">{fmt(monthTotal)} ₽</span>
+        <span className="summary-bar__value summary-bar__value--main">{fmt(monthTotal)} {CURRENCY}</span>
       </div>
     </div>
   );

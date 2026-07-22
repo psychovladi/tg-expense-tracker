@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import type { Expense } from '../types';
-import { getCategory } from '../data/categories';
+import { getCategory, CURRENCY } from '../data/categories';
 
 interface Props {
   expenses: Expense[];
@@ -15,6 +16,8 @@ const formatAmount = (n: number) =>
   n.toLocaleString('ru-RU', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
 
 export function ExpenseList({ expenses, onRemove }: Props) {
+  const [confirmId, setConfirmId] = useState<string | null>(null);
+
   if (expenses.length === 0) {
     return <p className="empty-state">Пока нет расходов — добавьте первый выше.</p>;
   }
@@ -23,6 +26,34 @@ export function ExpenseList({ expenses, onRemove }: Props) {
     <ul className="expense-list">
       {expenses.map((e) => {
         const category = getCategory(e.categoryId);
+        const confirming = confirmId === e.id;
+
+        if (confirming) {
+          return (
+            <li key={e.id} className="expense-list__item expense-list__item--confirm">
+              <span className="expense-list__confirm-text">
+                Удалить «{category.label}, {formatAmount(e.amount)} {CURRENCY}»?
+              </span>
+              <span className="expense-list__confirm-actions">
+                <button
+                  type="button"
+                  className="expense-list__confirm-btn expense-list__confirm-btn--cancel"
+                  onClick={() => setConfirmId(null)}
+                >
+                  Отмена
+                </button>
+                <button
+                  type="button"
+                  className="expense-list__confirm-btn expense-list__confirm-btn--delete"
+                  onClick={() => onRemove(e.id)}
+                >
+                  Удалить
+                </button>
+              </span>
+            </li>
+          );
+        }
+
         return (
           <li key={e.id} className="expense-list__item">
             <span className="expense-list__icon" style={{ background: category.color }}>
@@ -33,12 +64,12 @@ export function ExpenseList({ expenses, onRemove }: Props) {
               {e.note && <span className="expense-list__note">{e.note}</span>}
             </span>
             <span className="expense-list__date">{formatDate(e.date)}</span>
-            <span className="expense-list__amount">{formatAmount(e.amount)} ₽</span>
+            <span className="expense-list__amount">{formatAmount(e.amount)} {CURRENCY}</span>
             <button
               type="button"
               className="expense-list__remove"
               aria-label="Удалить"
-              onClick={() => onRemove(e.id)}
+              onClick={() => setConfirmId(e.id)}
             >
               ×
             </button>

@@ -1,6 +1,6 @@
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
 import type { Expense } from '../types';
-import { CATEGORIES } from '../data/categories';
+import { CATEGORIES, CURRENCY } from '../data/categories';
 
 interface Props {
   expenses: Expense[];
@@ -41,7 +41,7 @@ export function CategoryChart({ expenses }: Props) {
             ))}
           </Pie>
           <Tooltip
-            formatter={(value, name) => [`${Number(value).toLocaleString('ru-RU')} ₽`, name]}
+            formatter={(value, name) => [`${Number(value).toLocaleString('ru-RU')} ${CURRENCY}`, name]}
           />
         </PieChart>
       </ResponsiveContainer>
@@ -56,7 +56,7 @@ export function CategoryChart({ expenses }: Props) {
                 {d.emoji} {d.name}
               </span>
               <span className="category-chart__legend-value">
-                {d.value.toLocaleString('ru-RU')} ₽
+                {d.value.toLocaleString('ru-RU')} {CURRENCY}
               </span>
               <span className="category-chart__legend-pct">{Math.round((d.value / total) * 100)}%</span>
             </li>

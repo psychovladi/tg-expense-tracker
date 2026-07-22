@@ -13,6 +13,8 @@ export const CATEGORIES: Category[] = [
 
 export const DEFAULT_CATEGORY_ID = CATEGORIES[0].id;
 
+export const CURRENCY = 'Br';
+
 export function getCategory(id: string): Category {
   return CATEGORIES.find((c) => c.id === id) ?? CATEGORIES[CATEGORIES.length - 1];
 }

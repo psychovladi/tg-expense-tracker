@@ -118,30 +118,48 @@
 }
 
 .expense-form__categories {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
 }
 
 .category-chip {
-  border: none;
-  border-radius: 999px;
-  padding: 6px 12px;
+  border: 1.5px solid transparent;
+  border-radius: 14px;
+  padding: 10px 4px 8px;
   background: var(--bg-secondary);
   color: var(--text);
-  font-size: 13px;
-  display: inline-flex;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
   cursor: pointer;
+  transition: transform 0.12s ease, border-color 0.12s ease, background 0.12s ease;
+}
+
+.category-chip:active {
+  transform: scale(0.95);
 }
 
 .category-chip--active {
-  color: #fff;
+  font-weight: 600;
 }
 
 .category-chip__emoji {
-  font-size: 14px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  transition: background 0.12s ease;
+}
+
+.category-chip__label {
+  font-size: 11.5px;
+  text-align: center;
+  line-height: 1.2;
 }
 
 .expense-form__note,
@@ -250,6 +268,41 @@
 
 .expense-list__remove:hover {
   color: var(--destructive);
+}
+
+.expense-list__item--confirm {
+  border-color: var(--destructive);
+}
+
+.expense-list__confirm-text {
+  flex: 1;
+  min-width: 0;
+  font-size: 13px;
+}
+
+.expense-list__confirm-actions {
+  flex: 0 0 auto;
+  display: flex;
+  gap: 6px;
+}
+
+.expense-list__confirm-btn {
+  border: none;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.expense-list__confirm-btn--cancel {
+  background: var(--bg-secondary);
+  color: var(--text);
+}
+
+.expense-list__confirm-btn--delete {
+  background: var(--destructive);
+  color: #fff;
 }
 
 /* Chart */
