@@ -8,6 +8,8 @@ export const CATEGORIES: Category[] = [
   { id: 'fun', label: 'Развлечения', emoji: '🎮', color: '#a855f7' },
   { id: 'shopping', label: 'Покупки', emoji: '🛍️', color: '#ec4899' },
   { id: 'subscriptions', label: 'Подписки', emoji: '🔁', color: '#06b6d4' },
+  { id: 'cognac', label: 'Коньяк', emoji: '🥃', color: '#b45309' },
+  { id: 'cigarettes', label: 'Сигареты', emoji: '🚬', color: '#57534e' },
   { id: 'other', label: 'Другое', emoji: '✨', color: '#6b7280' },
 ];
 
